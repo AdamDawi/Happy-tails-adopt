@@ -3,6 +3,8 @@
     --bs-font-sans-serif: "Roboto", sans-serif;
     --bs-blue: #2067F5;
     --bs-primary: #2067F5;
+    --blueblue: #007EE7;
+    --redpink: #E12C54;
 }
 /* change font for headers */
 h1, h2, h3, h4, h5, h6 {
@@ -10,8 +12,13 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
 }
 
+.title{
+    text-align: center;
+    color: var(--blueblue);
+}
+
 .container{
-    padding-top: 12px;
+    padding-top: 8px;
     padding-bottom: 12px;
 }
 /* top bar */
@@ -24,8 +31,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-right: 8px;
 }
 
-/* card and elements */
+/* Card and elements */
 .dog-card{
+     position: relative; /* positioning in relation to the cards. */
     display: flex;
     flex-direction: column;
     box-shadow: 8px 8px 24px -23px rgba(66, 68, 90, 1);
@@ -36,15 +44,41 @@ h1, h2, h3, h4, h5, h6 {
 .dog-card:hover {
     box-shadow: 0 0 0 3px #2067F5; /* Change box-shadow to mimic border on hover */
 }
-.name-of-dog{
-    margin: 0px;
-    height: 50px;
-    font-size: 20px;
-    font-weight: 600;
+
+/* Style for heart button */
+.heart-button {
+    position: absolute; /* allows to place a button in the upper right corner of the card */
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* pointing cursor */
+    transition: bg 0.3s ease;
+    color: var(--redpink);
+}
+.heart-button:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+/* Bottom-card */
+.bottom-card{
+    height: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content:center;
+    justify-content: space-evenly;
+}
+.name-of-dog{
+    margin: 0px;
+    font-size: 20px;
+    font-weight: 600;
+    justify-self: center;
 }
 .img-of-dog {
     width: 100%;

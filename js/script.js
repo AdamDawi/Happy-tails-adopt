@@ -1,59 +1,80 @@
 document.addEventListener("DOMContentLoaded", function () {
-      // Fetch danych z API Dog CEO
-      let dogApi = fetch("https://dog.ceo/api/breeds/image/random/6").then(
+    // Fetch data from Dog CEO API
+    let dogApi = fetch("https://dog.ceo/api/breeds/image/random/6").then(
         (response) => response.json()
-      );
+    );
 
-      // Fetch danych z API Random User
-      let nameApi = fetch("https://randomuser.me/api/?results=6&inc=name") // Zmiana na 3, aby zgadzało się z liczbą obrazów
+    // Fetch data from Random User API
+    let nameApi = fetch("https://randomuser.me/api/?results=6&inc=name") // Change to 6 to match the number of images
         .then((response) => response.json());
 
-      // Równoległe oczekiwanie na oba zapytania
-      Promise.all([dogApi, nameApi])
+    // Wait for both requests to complete
+    Promise.all([dogApi, nameApi])
         .then((responses) => {
-          let dogData = responses[0];
-          let nameData = responses[1];
+            let dogData = responses[0];
+            let nameData = responses[1];
 
-          // Debugowanie danych
-          console.log(dogData);
-          console.log(nameData);
+            // Debug data
+            console.log(dogData);
+            console.log(nameData);
 
-          // Przetwarzanie obrazów psów i imion
-          let images = dogData.message;
-          let names = nameData.results;
-          let dogList = document.getElementById("dog-list");
-          dogList.innerHTML = ""; // Wyczyszczenie zawartości elementu dogList
+            // Process dog images and names
+            let images = dogData.message;
+            let names = nameData.results;
+            let dogList = document.getElementById("dog-list");
+            dogList.innerHTML = ""; // Clear the content of the dogList element
 
-          images.forEach((imageUrl, index) => {
-            // Stworzenie diva żeby guttery działały
-            let div = document.createElement("div");
-            // Tworzenie kontenera dla obrazu i imienia
-            let card = document.createElement("div");
-            card.className = "dog-card";
-            div.className = "col-md-6 col-lg-4 bg-body-tertiary";
+            images.forEach((imageUrl, index) => {
+                // Create a div for gutter spacing
+                let div = document.createElement("div");
+                div.className = "col-md-6 col-lg-4 bg-body-tertiary";
 
-            // Tworzenie elementu img i ustawienie jego src na URL obrazu
-            let img = document.createElement("img");
-            console.log(imageUrl); // Debugowanie URL obrazu
-            img.src = imageUrl;
-            img.alt = "Random Dog Image"; // Ustawienie atrybutu alt
-            img.className = "img-of-dog";
-            card.appendChild(img);
-            
-            // Tworzenie elementu p dla imienia
-            let nameElement = document.createElement("p");
-            let user = names[index];
-            nameElement.textContent = `${user.name.first}`;
-            nameElement.className = "name-of-dog";
-            
-            card.appendChild(nameElement);
-            
-            div.appendChild(card);
-            // Dodanie kontenera do elementu dogList
-            dogList.appendChild(div);
-          });
+                // Create a container for the image and name
+                let card = document.createElement("div");
+                card.className = "dog-card";
+
+                // Create an img element and set its src to the image URL
+                let img = document.createElement("img");
+                console.log(imageUrl); // Debug the image URL
+                img.src = imageUrl;
+                img.alt = "Random Dog Image"; // Set the alt attribute
+                img.className = "img-of-dog";
+
+                // Create a p element for the name
+                let nameElement = document.createElement("p");
+                let user = names[index];
+                nameElement.textContent = user.name.first;
+                nameElement.className = "name-of-dog";
+
+                // Button adopt me
+                let button = document.createElement("button");
+                button.textContent = "Adopt me";
+                button.className = "btn btn-outline-primary";
+
+                // Button with heart icon
+                let heartButton = document.createElement("button");
+                heartButton.className = "heart-button";
+                heartButton.innerHTML = "<i class='fas fa-heart'></i>"; // Font Awesome heart icon
+
+                // Div for name and button
+                let bottomDiv = document.createElement("div");
+                bottomDiv.className = "bottom-card";
+                bottomDiv.appendChild(nameElement);
+                bottomDiv.appendChild(button);
+
+                // Append elements to card
+                card.appendChild(img);
+                card.appendChild(heartButton);
+                card.appendChild(bottomDiv);
+
+                // Append card to container div
+                div.appendChild(card);
+
+                // Add container div to dogList
+                dogList.appendChild(div);
+            });
         })
         .catch((error) => {
-          console.error("Error:", error);
+            console.error("Error:", error);
         });
 });
