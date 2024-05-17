@@ -1,9 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // Obsługa zdarzenia kliknięcia na downloadButton:
-  var downloadButton = document.getElementById("download-button");
-  downloadButton.addEventListener(
-    "click",
-    function () {
       // Fetch danych z API Dog CEO
       let dogApi = fetch("https://dog.ceo/api/breeds/image/random/6").then(
         (response) => response.json()
@@ -30,10 +25,12 @@ document.addEventListener("DOMContentLoaded", function () {
           dogList.innerHTML = ""; // Wyczyszczenie zawartości elementu dogList
 
           images.forEach((imageUrl, index) => {
+            // Stworzenie diva żeby guttery działały
+            let div = document.createElement("div");
             // Tworzenie kontenera dla obrazu i imienia
-            let container = document.createElement("div");
-            container.style.marginBottom = "20px"; // Stylizacja kontenera (opcjonalne)
-            container.className = "col-md-6 col-lg-4";
+            let card = document.createElement("div");
+            card.className = "dog-card";
+            div.className = "col-md-6 col-lg-4 bg-body-tertiary";
 
             // Tworzenie elementu img i ustawienie jego src na URL obrazu
             let img = document.createElement("img");
@@ -41,24 +38,22 @@ document.addEventListener("DOMContentLoaded", function () {
             img.src = imageUrl;
             img.alt = "Random Dog Image"; // Ustawienie atrybutu alt
             img.className = "img-of-dog";
-            container.appendChild(img);
-
+            card.appendChild(img);
+            
             // Tworzenie elementu p dla imienia
             let nameElement = document.createElement("p");
             let user = names[index];
             nameElement.textContent = `${user.name.first}`;
-            nameElement.style.textAlign = "Center";
             nameElement.className = "name-of-dog";
-            container.appendChild(nameElement);
-
+            
+            card.appendChild(nameElement);
+            
+            div.appendChild(card);
             // Dodanie kontenera do elementu dogList
-            dogList.appendChild(container);
+            dogList.appendChild(div);
           });
         })
         .catch((error) => {
           console.error("Error:", error);
         });
-    },
-    false
-  );
 });
