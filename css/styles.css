@@ -28,7 +28,6 @@ h1, h2, h3, h4, h5, h6 {
 footer{
     box-shadow: 0 -10px 20px -5px rgba(243, 241, 241, 0.75);
     text-align: center;
-    width: 100%;
     padding: 32px;
     margin-top: 80px;
 }
@@ -44,6 +43,10 @@ footer{
 #dog-icon{
     width: 30px;
     margin-right: 8px;
+}
+
+#forms-list{
+    min-height: 72vh; 
 }
 
 #dog-list{
@@ -63,8 +66,8 @@ footer{
     box-shadow: 0 0 0 3px #2067F5; /* Change box-shadow to mimic border on hover */
 }
 
-/* Style for heart button */
-.heart-button {
+/* Style for top card button */
+.top-button {
     position: absolute; /* allows to place a button in the upper right corner of the card */
     top: 10px;
     right: 10px;
@@ -80,7 +83,7 @@ footer{
     transition: bg 0.3s ease;
     color: var(--redpink);
 }
-.heart-button:hover {
+.top-button:hover {
     background: rgba(255, 255, 255, 1);
 }
 

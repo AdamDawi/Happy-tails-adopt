@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 // Button with heart icon
                 let heartButton = document.createElement("button");
-                heartButton.className = "heart-button";
+                heartButton.className = "top-button";
                 heartButton.innerHTML = "<i class='fas fa-heart'></i>"; // Font Awesome heart icon
                 heartButton.setAttribute("data-dog-name", dogName); // Add data-dog-name attribute
                 heartButton.setAttribute("data-dog-img", imageUrl); // Add data-dog-img attribute

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="js/scriptIndex.js"></script>
+  <script src="js/scriptAdoptionForm.js"></script>
   <link rel="icon" href="images/dog_icon.png" type="image/x-icon">
   <!-- font roboto -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -50,54 +50,18 @@
   </nav>
 
   <div class="text-section container">
-    <h2 class="title">Find your new best friend</h2>
-    <p class="centered-text">Discover a wide variety of lovable dogs waiting for a forever home.
-      Browse pets from our site and find your perfect companion today.
-    </p>
-    <h4 class="title">Dogs Avaiable for Adoption <i class="fa-solid fa-angle-right"></i></h4>
+    <h4 class="title">Your adoption forms <i class="fa-solid fa-paper-plane fa-beat"></i></h4>
   </div>
-
   <div class="container">
+    <p class='centered-text'>Your list is empty! Let's go and adopt lovely dog.</p>
     <!-- g-5 spacing between elements -->
-    <div class="row g-5" id="dog-list">
-
+    <div class="row g-5" id="forms-list">
+        
     </div>
-  </div>
+</div>
+
+    
   <footer>&copy;2024 Adam Dawidziuk</footer>
-
-  <!-- Modal -->
-  <div class="modal fade" id="adoptModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast -->
-  <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
-    <div id="favoriteToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <img src="images/dog_icon.png" class="rounded me-2" alt="dog_icon" style="width: 20px; height: 20px;">
-        <strong class="me-auto">Favorite Dog</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-      <div class="toast-body">
-        Dog added to your favorites!
-      </div>
-    </div>
-  </div>
-
 
   <!-- bootstrap -->
   <!-- prevent loading bootstrap javascript from blocking page loading -->
