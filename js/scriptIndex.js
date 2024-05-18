@@ -62,9 +62,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 heartButton.addEventListener("click", function () {
                     const dogName = this.getAttribute("data-dog-name");
                     const dogImg = this.getAttribute("data-dog-img");
-                    // Handle the favorite action here
+                    addFavouriteDog(dogName, dogImg);
                     console.log(`Favorite dog: ${dogName}, Image: ${dogImg}`);
-                    // For example, add the dog to a list of favorites
                 });
 
                 // Div for name and button
@@ -105,7 +104,24 @@ function modal(){
     });
 }
 
-function hearthButton(){
-    const hearthButton = document.getElementById('adoptModal');
+function addFavouriteDog(name, image) {
+    //new object
+    let dog = {};
+    dog.name = name;
+    dog.image = image;
 
+    let list = JSON.parse(localStorage.getItem('list'));
+    if (list===null) list=[]; 
+    //check if dog is on the list
+    let exists = list.some(d => d.name === name && d.image === image);
+    if (!exists){
+        list.push(dog); //add new object to list
+
+        //save list to local storage
+        localStorage.setItem("list", JSON.stringify(list));
+
+        //show toast
+        let toast = new bootstrap.Toast(document.getElementById('favoriteToast'));
+        toast.show();
+    } 
 }
