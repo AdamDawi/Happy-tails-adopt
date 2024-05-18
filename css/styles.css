@@ -15,7 +15,7 @@ h1, h2, h3, h4, h5, h6 {
 .text-section{
     margin-top: 12px;
 }
-.text{
+.centered-text{
     line-height: 1.5; 
     text-align: center;
 }
@@ -25,6 +25,13 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--blueblue);
 }
 
+footer{
+    box-shadow: 0 -10px 20px -5px rgba(243, 241, 241, 0.75);
+    text-align: center;
+    width: 100%;
+    padding: 32px;
+    margin-top: 80px;
+}
 .container{
     padding-top: 8px;
     padding-bottom: 12px;
@@ -39,6 +46,9 @@ h1, h2, h3, h4, h5, h6 {
     margin-right: 8px;
 }
 
+#dog-list{
+    min-height: 72vh; 
+}
 /* Card and elements */
 .dog-card{
      position: relative; /* positioning in relation to the cards. */

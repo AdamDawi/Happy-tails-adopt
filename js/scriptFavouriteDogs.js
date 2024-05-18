@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let dogList = document.getElementById("dog-list");
     dogList.innerHTML = ""; // Clear the content of the dogList element
     let list = JSON.parse(localStorage.getItem('list'));
+    if(list==null) {
+        dogList.innerHTML += "<p class='centered-text'>Your list is empty! Let's go and add some dogs.</p>";
+    }
     list.forEach((el) => {
         // Create a div for gutter spacing
         let div = document.createElement("div");
