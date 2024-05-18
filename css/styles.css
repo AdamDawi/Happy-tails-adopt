@@ -12,6 +12,14 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
 }
 
+.text-section{
+    margin-top: 12px;
+}
+.text{
+    line-height: 1.5; 
+    text-align: center;
+}
+
 .title{
     text-align: center;
     color: var(--blueblue);
