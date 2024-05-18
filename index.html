@@ -54,7 +54,7 @@
     <p class="centered-text">Discover a wide variety of lovable dogs waiting for a forever home.
       Browse pets from our site and find your perfect companion today.
     </p>
-    <h4 class="title">Dogs Avaiable for Adoption <i class="fa-solid fa-angle-right"></i></h4>
+    <h4 class="title">Dogs Available for Adoption <i class="fa-solid fa-angle-right"></i></h4>
   </div>
 
   <div class="container">
@@ -65,7 +65,7 @@
   </div>
   <footer>&copy;2024 Adam Dawidziuk</footer>
 
-  <!-- Modal -->
+  <!-- Modal
   <div class="modal fade" id="adoptModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -82,22 +82,73 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
-  <!-- Toast -->
-  <div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
-    <div id="favoriteToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <img src="images/dog_icon.png" class="rounded me-2" alt="dog_icon" style="width: 20px; height: 20px;">
-        <strong class="me-auto">Favorite Dog</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+  <!-- Modal -->
+<div class="modal fade" id="adoptionModal" tabindex="-1" aria-labelledby="adoptionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="adoptionModalLabel">Adoption Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="toast-body">
-        Dog added to your favorites!
+      <div class="modal-body">
+        <form id="adoptionForm">
+          <div class="mb-3">
+            <label for="adopterName" class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="adopterName" required>
+          </div>
+          <div class="mb-3">
+            <label for="adopterEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="adopterEmail" required>
+          </div>
+          <div class="mb-3">
+            <label for="dogName" class="form-label">Dog Name</label>
+            <input type="text" class="form-control" id="dogName" disabled required>
+          </div>
+          <div class="mb-3">
+            <label for="adoptionReason" class="form-label">Why do you want to adopt this dog?</label>
+            <textarea class="form-control" id="adoptionReason" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Do you have other pets?</label><br>
+            <input type="radio" id="petsYes" name="otherPets" value="Yes" required>
+            <label for="petsYes">Yes</label><br>
+            <input type="radio" id="petsNo" name="otherPets" value="No">
+            <label for="petsNo">No</label>
+          </div>
+          <div class="mb-3">
+            <label for="homeType" class="form-label">Type of Home</label>
+            <select class="form-select" id="homeType" required>
+              <option value="Apartment">Apartment</option>
+              <option value="House">House</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+            <label class="form-check-label" for="agreeTerms">I agree to the terms and conditions</label>
+          </div>
+          <button id="sub" type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
     </div>
   </div>
+</div>
 
+<!-- Toast -->
+<div class="position-fixed bottom-0 start-50 translate-middle-x p-3" style="z-index: 11">
+  <div id="favoriteToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="images/dog_icon.png" class="rounded me-2" alt="dog_icon" style="width: 20px; height: 20px;">
+      <strong class="me-auto">Favorite Dog</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      Dog added to your favorites!
+    </div>
+  </div>
+</div>
 
   <!-- bootstrap -->
   <!-- prevent loading bootstrap javascript from blocking page loading -->
