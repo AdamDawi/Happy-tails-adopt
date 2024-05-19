@@ -4,17 +4,69 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function modal() {
-  const adoptModal = document.getElementById("adoptModal");
+  const adoptModal = document.getElementById("adoptionModal");
+  //the function will be called when the button that opens the modal is clicked
   adoptModal.addEventListener("show.bs.modal", function (event) {
-    const button = event.relatedTarget; // Button that triggered the modal
-    const dogName = button.getAttribute("data-dog-name"); // Extract info from data-* attributes
+    const button = event.relatedTarget;
+    const dogName = button.getAttribute("data-dog-name");
+    const dogImg = button.getAttribute("data-dog-img");
+    //add dog name to form
+    const dogNameInput = document.getElementById("dogName");
+    dogNameInput.value = dogName;
+    //add img data to button on form
+    const buttonSubmit = document.getElementById("sub");
+    buttonSubmit.setAttribute("data-dog-img", dogImg);
+  });
+  //the function will be called when the button that sumbit form is clicked
+  adoptModal.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-    // Update the modal's content.
-    const modalTitle = adoptModal.querySelector(".modal-title");
-    const modalBody = adoptModal.querySelector(".modal-body");
+    //retrieving values ​​from a form
+    const adopterName = document.getElementById("adopterName").value;
+    const adopterEmail = document.getElementById("adopterEmail").value;
+    const dogName = document.getElementById("dogName").value;
+    const adoptionReason = document.getElementById("adoptionReason").value;
+    const otherPets = document.querySelector(
+      'input[name="otherPets"]:checked'
+    ).value;
+    const homeType = document.getElementById("homeType").value;
+    const dogImage = document.getElementById("sub").getAttribute("data-dog-img");
 
-    modalTitle.textContent = "Adopt " + dogName;
-    modalBody.textContent = "Are you sure you want to adopt " + dogName + "?";
+    //creating an adoption object
+    const adoption = {
+      adopterName,
+      adopterEmail,
+      dogName,
+      adoptionReason,
+      otherPets,
+      homeType,
+      dogImage
+    };
+
+    //retrieving the adoption list from localStorage
+    let adoptions = JSON.parse(localStorage.getItem("adoptions")) || [];
+
+    //checking if such adoption already exists
+    const existingAdoption = adoptions.find(
+      (adopt) =>
+        adopt.dogName === dogName && adopt.dogImage === dogImage
+    );
+
+    if (existingAdoption) {
+      alert("This adoption entry already exists.");
+    } else {
+      //adding a new adoption to the list
+      adoptions.push(adoption);
+      localStorage.setItem("adoptions", JSON.stringify(adoptions));
+      alert("Adoption request submitted successfully!");
+
+      //clearing the form
+      adoptionForm.reset();
+
+      //close modal
+      const modalInstance = bootstrap.Modal.getInstance(adoptModal);
+      modalInstance.hide();
+    }
   });
 }
 
@@ -72,15 +124,14 @@ function displayListOfFavouriteDogs(){
     button.textContent = "Adopt me";
     button.className = "btn btn-outline-primary";
     button.setAttribute("data-bs-toggle", "modal"); // Add data-bs-toggle attribute
-    button.setAttribute("data-bs-target", "#adoptModal"); // Add data-bs-target attribute
+    button.setAttribute("data-bs-target", "#adoptionModal"); // Add data-bs-target attribute
     button.setAttribute("data-dog-name", el.name); // Add data-dog-name attribute
+    button.setAttribute("data-dog-img", el.image); // Add data-dog-img attribute
 
     // Button with heart icon
     let xButton = document.createElement("button");
     xButton.className = "top-button";
     xButton.innerHTML = "<i class='fa-solid fa-xmark'></i>"; // Font Awesome heart icon
-    xButton.setAttribute("data-dog-name", el.name); // Add data-dog-name attribute
-    xButton.setAttribute("data-dog-img", el.image); // Add data-dog-img attribute
 
     // Add event listener for x button
     xButton.addEventListener("click", function () {

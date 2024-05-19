@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   modal();
+  fetchApiAndDisplay();
+});
+
+function fetchApiAndDisplay(){
   // Fetch data from Dog CEO API
   let dogApi = fetch("https://dog.ceo/api/breeds/image/random/12").then(
     (response) => response.json()
@@ -65,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
           const dogName = this.getAttribute("data-dog-name");
           const dogImg = this.getAttribute("data-dog-img");
           addFavouriteDog(dogName, dogImg);
-          console.log(`Favorite dog: ${dogName}, Image: ${dogImg}`);
         });
 
         // Div for name and button
@@ -89,23 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch((error) => {
       console.error("Error:", error);
     });
-});
-
-// function modal() {
-//   const adoptModal = document.getElementById("adoptionModal");
-//   adoptModal.addEventListener("show.bs.modal", function (event) {
-//     const button = event.relatedTarget; // Button that triggered the modal
-//     const dogName = button.getAttribute("data-dog-name"); // Extract info from data-* attributes
-
-//     // Update the modal's content.
-//     const modalTitle = adoptModal.querySelector(".modal-title");
-//     const modalBody = adoptModal.querySelector(".modal-body");
-
-//     modalTitle.textContent = "Adopt " + dogName;
-//     modalBody.textContent = "Are you sure you want to adopt " + dogName + "?";
-//   });
-// }
-
+}
 function addFavouriteDog(name, image) {
   //new object
   let dog = {};
@@ -130,25 +117,23 @@ function addFavouriteDog(name, image) {
 
 function modal() {
   const adoptModal = document.getElementById("adoptionModal");
-  // Funkcja, która będzie wywoływana po kliknięciu przycisku otwierającego modal
-  
+  //the function will be called when the button that opens the modal is clicked
   adoptModal.addEventListener("show.bs.modal", function (event) {
-        const button = event.relatedTarget;
-        const dogName = button.getAttribute("data-dog-name");
-        const dogImg = button.getAttribute("data-dog-img");
-        console.log(dogName);
-        console.log(dogImg);
-        const dogNameInput = document.getElementById('dogName');
-        dogNameInput.value = dogName;
-
-        const buttonSubmit = document.getElementById('sub');
-        buttonSubmit.setAttribute("data-dog-img", dogImg);
-    });
-
+    const button = event.relatedTarget;
+    const dogName = button.getAttribute("data-dog-name");
+    const dogImg = button.getAttribute("data-dog-img");
+    //add dog name to form
+    const dogNameInput = document.getElementById("dogName");
+    dogNameInput.value = dogName;
+    //add img data to button on form
+    const buttonSubmit = document.getElementById("sub");
+    buttonSubmit.setAttribute("data-dog-img", dogImg);
+  });
+  //the function will be called when the button that sumbit form is clicked
   adoptModal.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // Pobieranie wartości z formularza
+    //retrieving values ​​from a form
     const adopterName = document.getElementById("adopterName").value;
     const adopterEmail = document.getElementById("adopterEmail").value;
     const dogName = document.getElementById("dogName").value;
@@ -157,47 +142,42 @@ function modal() {
       'input[name="otherPets"]:checked'
     ).value;
     const homeType = document.getElementById("homeType").value;
+    const dogImage = document.getElementById("sub").getAttribute("data-dog-img");
 
-    console.log("Hello world!");
-    console.log(adopterName);
-    console.log(dogName);
-    console.log(document.getElementById("sub").getAttribute("data-dog-img"));
-
-    // Tworzenie obiektu adopcji
+    //creating an adoption object
     const adoption = {
       adopterName,
       adopterEmail,
       dogName,
       adoptionReason,
       otherPets,
-      homeType
+      homeType,
+      dogImage
     };
 
-    // Pobieranie listy adopcji z localStorage
+    //retrieving the adoption list from localStorage
     let adoptions = JSON.parse(localStorage.getItem("adoptions")) || [];
 
-    // Sprawdzanie, czy już istnieje taka adopcja
+    //checking if such adoption already exists
     const existingAdoption = adoptions.find(
       (adopt) =>
-        adopt.dogName === dogName && adopt.adopterEmail === adopterEmail
+        adopt.dogName === dogName && adopt.dogImage === dogImage
     );
 
     if (existingAdoption) {
       alert("This adoption entry already exists.");
     } else {
-      // Dodawanie nowej adopcji do listy
+      //adding a new adoption to the list
       adoptions.push(adoption);
       localStorage.setItem("adoptions", JSON.stringify(adoptions));
       alert("Adoption request submitted successfully!");
 
-      // Czyszczenie formularza
+      //clearing the form
       adoptionForm.reset();
 
-      // Zamknięcie modala
-      const adoptionModal = new bootstrap.Modal(
-        document.getElementById("adoptionModal")
-      );
-      adoptionModal.hide();
+      //close modal
+      const modalInstance = bootstrap.Modal.getInstance(adoptModal);
+      modalInstance.hide();
     }
   });
 }
