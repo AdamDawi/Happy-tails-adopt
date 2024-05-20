@@ -131,7 +131,7 @@ function displayListOfFavouriteDogs(){
     // Button with X
     let xButton = document.createElement("button");
     xButton.className = "top-button";
-    xButton.innerHTML = "<i class='fa-solid fa-xmark'></i>"; // Font Awesome heart icon
+    xButton.innerHTML = "<i class='fa-solid fa-xmark'></i>"; // Font Awesome X icon
     xButton.setAttribute("data-dog-name", el.name); // Add data-dog-name attribute
     xButton.setAttribute("data-dog-img", el.image); // Add data-dog-img attribute
 
