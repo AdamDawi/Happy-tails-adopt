@@ -46,12 +46,15 @@ footer{
 }
 
 #forms-list{
+    /* for footer to be on bottom of website */
     min-height: 72vh; 
 }
 
 #dog-list{
+    /* for footer to be on bottom of website */
     min-height: 72vh; 
 }
+
 /* Card and elements */
 .dog-card{
      position: relative; /* positioning in relation to the cards. */

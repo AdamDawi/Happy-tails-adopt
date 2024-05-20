@@ -78,7 +78,7 @@ function deleteFavouriteDog(dogName, dogImg) {
 
         //if this is dog to delete
         if (dog.name === dogName && dog.image === dogImg) {
-            if (confirm("Usunąć psa z listy?")) {
+            if (confirm("Delete dog from list?")) {
                 //delete from list
                 list.splice(i, 1);
 
@@ -98,13 +98,13 @@ function displayListOfFavouriteDogs(){
   if (list == null || list.length==0) {
     dogList.innerHTML +=
       "<p class='centered-text'>Your list is empty! Let's go and add some dogs.</p>";
-  }
+  } else
   list.forEach((el) => {
     // Create a div for gutter spacing
     let div = document.createElement("div");
     div.className = "col-md-6 col-lg-4";
 
-    // Create a container for the image and name
+    // Create a container for the image,name and buttons
     let card = document.createElement("div");
     card.className = "dog-card";
 
@@ -128,10 +128,12 @@ function displayListOfFavouriteDogs(){
     button.setAttribute("data-dog-name", el.name); // Add data-dog-name attribute
     button.setAttribute("data-dog-img", el.image); // Add data-dog-img attribute
 
-    // Button with heart icon
+    // Button with X
     let xButton = document.createElement("button");
     xButton.className = "top-button";
     xButton.innerHTML = "<i class='fa-solid fa-xmark'></i>"; // Font Awesome heart icon
+    xButton.setAttribute("data-dog-name", el.name); // Add data-dog-name attribute
+    xButton.setAttribute("data-dog-img", el.image); // Add data-dog-img attribute
 
     // Add event listener for x button
     xButton.addEventListener("click", function () {
