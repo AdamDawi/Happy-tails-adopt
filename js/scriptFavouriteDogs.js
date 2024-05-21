@@ -1,11 +1,88 @@
 document.addEventListener("DOMContentLoaded", function () {
+  //initialazing listeners
   modal();
   displayListOfFavouriteDogs();
 });
 
+function displayListOfFavouriteDogs() {
+  let dogList = document.getElementById("dog-list");
+  dogList.innerHTML = ""; //clear the content of the dogList element
+  let list = JSON.parse(localStorage.getItem("list"));
+  if (list == null || list.length == 0) {
+    dogList.innerHTML +=
+      "<p class='centered-text'>Your list is empty! Let's go and add some dogs.</p>";
+  } else
+    list.forEach((el) => {
+      //create a div for gutter spacing
+      let div = document.createElement("div");
+      div.className = "col-md-6 col-lg-4";
+
+      //create a container for the image,name and buttons
+      let card = document.createElement("div");
+      card.className = "dog-card";
+
+      //create an img element and set its src to the image URL
+      let img = document.createElement("img");
+      img.src = el.image;
+      img.alt = "Random Dog Image"; // Set the alt attribute
+      img.className = "img-of-dog";
+
+      //create a p element for the name
+      let nameElement = document.createElement("p");
+      nameElement.textContent = el.name;
+      nameElement.className = "name-of-dog";
+
+      //button adopt me
+      let button = document.createElement("button");
+      button.textContent = "Adopt me";
+      button.className = "btn btn-outline-primary";
+      button.setAttribute("data-bs-toggle", "modal"); //add data-bs-toggle attribute
+      button.setAttribute("data-bs-target", "#adoptionModal"); //add data-bs-target attribute
+      button.setAttribute("data-dog-name", el.name); //add data-dog-name attribute
+      button.setAttribute("data-dog-img", el.image); //add data-dog-img attribute
+
+      //delete button
+      let deleteButton = document.createElement("button");
+      deleteButton.className = "top-button";
+      deleteButton.innerHTML = "<i class='fa-solid fa-xmark'></i>"; //font Awesome X icon
+      deleteButton.setAttribute("data-dog-name", el.name); //add data-dog-name attribute
+      deleteButton.setAttribute("data-dog-img", el.image); //add data-dog-img attribute
+
+      //add event listener for delete button
+      deleteButton.addEventListener("click", function () {
+        const dogName = this.getAttribute("data-dog-name");
+        const dogImg = this.getAttribute("data-dog-img");
+        deleteFavouriteDog(dogName, dogImg);
+      });
+
+      //div for name and button
+      let bottomDiv = document.createElement("div");
+      bottomDiv.className = "bottom-card";
+      bottomDiv.appendChild(nameElement);
+      bottomDiv.appendChild(button);
+
+      //append elements to card
+      card.appendChild(img);
+      card.appendChild(deleteButton);
+      card.appendChild(bottomDiv);
+
+      //append card to container div
+      div.appendChild(card);
+
+      //add container div to dog list
+      dogList.appendChild(div);
+    });
+}
+
 function modal() {
   const adoptModal = document.getElementById("adoptionModal");
   //the function will be called when the button that opens the modal is clicked
+  adoptListener(adoptModal);
+  //the function will be called when the button that sumbit form is clicked
+  sumbitListener(adoptModal);
+}
+
+function adoptListener(adoptModal) {
   adoptModal.addEventListener("show.bs.modal", function (event) {
     const button = event.relatedTarget;
     const dogName = button.getAttribute("data-dog-name");
@@ -17,7 +94,9 @@ function modal() {
     const buttonSubmit = document.getElementById("sub");
     buttonSubmit.setAttribute("data-dog-img", dogImg);
   });
-  //the function will be called when the button that sumbit form is clicked
+}
+
+function sumbitListener(adoptModal) {
   adoptModal.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -30,7 +109,9 @@ function modal() {
       'input[name="otherPets"]:checked'
     ).value;
     const homeType = document.getElementById("homeType").value;
-    const dogImage = document.getElementById("sub").getAttribute("data-dog-img");
+    const dogImage = document
+      .getElementById("sub")
+      .getAttribute("data-dog-img");
 
     //creating an adoption object
     const adoption = {
@@ -40,7 +121,7 @@ function modal() {
       adoptionReason,
       otherPets,
       homeType,
-      dogImage
+      dogImage,
     };
 
     //retrieving the adoption list from localStorage
@@ -48,8 +129,7 @@ function modal() {
 
     //checking if such adoption already exists
     const existingAdoption = adoptions.find(
-      (adopt) =>
-        adopt.dogName === dogName && adopt.dogImage === dogImage
+      (adopt) => adopt.dogName === dogName && adopt.dogImage === dogImage
     );
 
     if (existingAdoption) {
@@ -71,92 +151,22 @@ function modal() {
 }
 
 function deleteFavouriteDog(dogName, dogImg) {
-    let list = JSON.parse(localStorage.getItem("list"));
-
-    for (let i = 0; i < list.length; i++) {
-        let dog = list[i];
-
-        //if this is dog to delete
-        if (dog.name === dogName && dog.image === dogImg) {
-            if (confirm("Delete dog from list?")) {
-                //delete from list
-                list.splice(i, 1);
-
-                localStorage.setItem("list", JSON.stringify(list));
-
-                displayListOfFavouriteDogs();
-            }
-            break;
-        }
-    }
-}
-
-function displayListOfFavouriteDogs(){
-    let dogList = document.getElementById("dog-list");
-  dogList.innerHTML = ""; // Clear the content of the dogList element
   let list = JSON.parse(localStorage.getItem("list"));
-  if (list == null || list.length==0) {
-    dogList.innerHTML +=
-      "<p class='centered-text'>Your list is empty! Let's go and add some dogs.</p>";
-  } else
-  list.forEach((el) => {
-    // Create a div for gutter spacing
-    let div = document.createElement("div");
-    div.className = "col-md-6 col-lg-4";
 
-    // Create a container for the image,name and buttons
-    let card = document.createElement("div");
-    card.className = "dog-card";
+  for (let i = 0; i < list.length; i++) {
+    let dog = list[i];
 
-    // Create an img element and set its src to the image URL
-    let img = document.createElement("img");
-    img.src = el.image;
-    img.alt = "Random Dog Image"; // Set the alt attribute
-    img.className = "img-of-dog";
+    //if this is dog to delete
+    if (dog.name === dogName && dog.image === dogImg) {
+      if (confirm("Delete dog from list?")) {
+        //delete from list
+        list.splice(i, 1);
 
-    // Create a p element for the name
-    let nameElement = document.createElement("p");
-    nameElement.textContent = el.name;
-    nameElement.className = "name-of-dog";
+        localStorage.setItem("list", JSON.stringify(list));
 
-    // Button adopt me
-    let button = document.createElement("button");
-    button.textContent = "Adopt me";
-    button.className = "btn btn-outline-primary";
-    button.setAttribute("data-bs-toggle", "modal"); // Add data-bs-toggle attribute
-    button.setAttribute("data-bs-target", "#adoptionModal"); // Add data-bs-target attribute
-    button.setAttribute("data-dog-name", el.name); // Add data-dog-name attribute
-    button.setAttribute("data-dog-img", el.image); // Add data-dog-img attribute
-
-    // Button with X
-    let xButton = document.createElement("button");
-    xButton.className = "top-button";
-    xButton.innerHTML = "<i class='fa-solid fa-xmark'></i>"; // Font Awesome X icon
-    xButton.setAttribute("data-dog-name", el.name); // Add data-dog-name attribute
-    xButton.setAttribute("data-dog-img", el.image); // Add data-dog-img attribute
-
-    // Add event listener for x button
-    xButton.addEventListener("click", function () {
-      const dogName = this.getAttribute("data-dog-name");
-      const dogImg = this.getAttribute("data-dog-img");
-      deleteFavouriteDog(dogName, dogImg);
-    });
-
-    // Div for name and button
-    let bottomDiv = document.createElement("div");
-    bottomDiv.className = "bottom-card";
-    bottomDiv.appendChild(nameElement);
-    bottomDiv.appendChild(button);
-
-    // Append elements to card
-    card.appendChild(img);
-    card.appendChild(xButton);
-    card.appendChild(bottomDiv);
-
-    // Append card to container div
-    div.appendChild(card);
-
-    // Add container div to dogList
-    dogList.appendChild(div);
-  });
+        displayListOfFavouriteDogs();
+      }
+      break;
+    }
+  }
 }

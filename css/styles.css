@@ -111,15 +111,6 @@ footer{
 }
 
 /* form card */
-.adoption-form{
-    position: relative; /* positioning in relation to the cards. */
-    display: flex;
-    flex-direction: column;
-    box-shadow: 8px 8px 24px -23px rgba(66, 68, 90, 1);
-    transition: box-shadow 0.2s ease; /* color animation */
-    border-radius: 10px;
-    overflow: hidden;
-}
 
 .bottom-card-form{
     height: 350px;

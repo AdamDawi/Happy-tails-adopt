@@ -1,91 +1,92 @@
 document.addEventListener("DOMContentLoaded", function () {
+  //initialazing listeners
   modal();
   fetchApiAndDisplay();
 });
 
 function fetchApiAndDisplay(){
-  // Fetch data from Dog CEO API
+  //fetch data from Dog API
   let dogApi = fetch("https://dog.ceo/api/breeds/image/random/12").then(
     (response) => response.json()
   );
 
-  // Fetch data from Random User API
+  //fetch data from Random User API
   let nameApi = fetch("https://randomuser.me/api/?results=12&inc=name").then(
     (response) => response.json()
   );
 
-  // Wait for both requests to complete
+  //wait for both requests to complete
   Promise.all([dogApi, nameApi])
     .then((responses) => {
       let dogData = responses[0];
       let nameData = responses[1];
 
-      // Process dog images and names
+      //process dog images and names
       let images = dogData.message;
       let names = nameData.results;
       let dogList = document.getElementById("dog-list");
-      dogList.innerHTML = ""; // Clear the content of the dogList element
+      dogList.innerHTML = ""; //clear the content of the dogList element
 
       images.forEach((imageUrl, index) => {
-        // Create a div for gutter spacing
+        //create a div for gutter spacing
         let div = document.createElement("div");
         div.className = "col-md-6 col-lg-4";
 
-        // Create a container for the image and name
+        //create a container for the image and name
         let card = document.createElement("div");
         card.className = "dog-card";
 
-        // Create an img element and set its src to the image URL
+        //create an img element and set its src to the image URL
         let img = document.createElement("img");
         img.src = imageUrl;
         img.alt = "Random Dog Image"; // Set the alt attribute
         img.className = "img-of-dog";
 
-        // Create a p element for the name
+        //create a p element for the name
         let nameElement = document.createElement("p");
         let user = names[index];
         let dogName = user.name.first;
         nameElement.textContent = dogName;
         nameElement.className = "name-of-dog";
 
-        // Button adopt me
+        //button adopt me
         let button = document.createElement("button");
         button.textContent = "Adopt me";
         button.className = "btn btn-outline-primary";
-        button.setAttribute("data-bs-toggle", "modal"); // Add data-bs-toggle attribute
-        button.setAttribute("data-bs-target", "#adoptionModal"); // Add data-bs-target attribute
-        button.setAttribute("data-dog-name", dogName); // Add data-dog-name attribute
-        button.setAttribute("data-dog-img", imageUrl); // Add data-dog-img attribute
+        button.setAttribute("data-bs-toggle", "modal"); //add data-bs-toggle attribute
+        button.setAttribute("data-bs-target", "#adoptionModal"); //add data-bs-target attribute
+        button.setAttribute("data-dog-name", dogName); //add data-dog-name attribute
+        button.setAttribute("data-dog-img", imageUrl); //add data-dog-img attribute
 
-        // Button with heart icon
+        //button with heart icon
         let heartButton = document.createElement("button");
         heartButton.className = "top-button";
-        heartButton.innerHTML = "<i class='fas fa-heart'></i>"; // Font Awesome heart icon
-        heartButton.setAttribute("data-dog-name", dogName); // Add data-dog-name attribute
-        heartButton.setAttribute("data-dog-img", imageUrl); // Add data-dog-img attribute
+        heartButton.innerHTML = "<i class='fas fa-heart'></i>"; //font Awesome heart icon
+        heartButton.setAttribute("data-dog-name", dogName); //add data-dog-name attribute
+        heartButton.setAttribute("data-dog-img", imageUrl); //add data-dog-img attribute
 
-        // Add event listener for heart button
+        //add event listener for heart button
         heartButton.addEventListener("click", function () {
           const dogName = this.getAttribute("data-dog-name");
           const dogImg = this.getAttribute("data-dog-img");
           addFavouriteDog(dogName, dogImg);
         });
 
-        // Div for name and button
+        //div for name and button
         let bottomDiv = document.createElement("div");
         bottomDiv.className = "bottom-card";
         bottomDiv.appendChild(nameElement);
         bottomDiv.appendChild(button);
 
-        // Append elements to card
+        //append elements to card
         card.appendChild(img);
         card.appendChild(heartButton);
         card.appendChild(bottomDiv);
 
-        // Append card to container div
+        //append card to container div
         div.appendChild(card);
 
-        // Add container div to dogList
+        //add container div to dogList
         dogList.appendChild(div);
       });
     })
@@ -118,6 +119,12 @@ function addFavouriteDog(name, image) {
 function modal() {
   const adoptModal = document.getElementById("adoptionModal");
   //the function will be called when the button that opens the modal is clicked
+  adoptListener(adoptModal);
+  //the function will be called when the button that sumbit form is clicked
+  sumbitListener(adoptModal);
+}
+
+function adoptListener(adoptModal) {
   adoptModal.addEventListener("show.bs.modal", function (event) {
     const button = event.relatedTarget;
     const dogName = button.getAttribute("data-dog-name");
@@ -129,7 +136,9 @@ function modal() {
     const buttonSubmit = document.getElementById("sub");
     buttonSubmit.setAttribute("data-dog-img", dogImg);
   });
-  //the function will be called when the button that sumbit form is clicked
+}
+
+function sumbitListener(adoptModal) {
   adoptModal.addEventListener("submit", function (e) {
     e.preventDefault();
 
