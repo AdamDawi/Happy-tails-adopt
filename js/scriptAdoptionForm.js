@@ -47,6 +47,11 @@ function displayListOfAdoptionForms() {
       let homePara = document.createElement("p");
       homePara.innerHTML = "<strong>Type of Home:</strong> " + el.homeType;
 
+      // Checkbox values
+      let aspectsPara = document.createElement("p");  
+      aspectsPara.innerHTML = "<strong>Adoption Aspects:</strong> " +(el.aspects && el.aspects.length > 0 ? el.aspects.join(", ") : "None");
+      aspectsPara.className = "text-center";
+
       //edit button
       let editButton = document.createElement("button");
       editButton.textContent = "Edit";
@@ -80,6 +85,7 @@ function displayListOfAdoptionForms() {
       bottomDiv.appendChild(reasonPara);
       bottomDiv.appendChild(petsPara);
       bottomDiv.appendChild(homePara);
+      bottomDiv.appendChild(aspectsPara); // Append aspects
       bottomDiv.appendChild(editButton);
 
       //append elements to card
@@ -135,6 +141,16 @@ function editListener(adoptModal) {
           homeTypeInput.value = form.homeType;
           otherPetsInput.checked = true;
 
+          // Check the proper checkboxes based on the saved data
+          if (form.aspects && form.aspects.length > 0) {
+            form.aspects.forEach((aspect) => {
+              const checkbox = document.querySelector('input[type="checkbox"][value="' + aspect + '"]');
+              if (checkbox) {
+                checkbox.checked = true;
+              }
+            });
+          }
+
           break;
         }
       }
@@ -163,7 +179,20 @@ function sumbitListener(adoptModal) {
       .getElementById("sub")
       .getAttribute("data-dog-img");
 
-    //creating an adoption object
+    // Select all checked checkboxes with type="checkbox"
+    const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    // Convert the NodeList of checked checkboxes to an array and their values
+    let aspects = [];
+    for(let i=0; i<checkedCheckboxes.length; i++){
+        aspects.push(checkedCheckboxes[i].value);
+    }
+
+    // Remove the last element from the aspects list because it is value 'on'
+    if (aspects.length > 0) {
+      aspects.pop();
+    }
+
+    // Creating an adoption object
     const adoption = {
       adopterName,
       adopterEmail,
@@ -172,6 +201,7 @@ function sumbitListener(adoptModal) {
       otherPets,
       homeType,
       dogImage,
+      aspects,
     };
 
     //deleting existing form

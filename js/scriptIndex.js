@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
   fetchApiAndDisplay();
 });
 
-function fetchApiAndDisplay(){
+function fetchApiAndDisplay() {
   //fetch data from Dog API
   let dogApi = fetch("https://dog.ceo/api/breeds/image/random/12").then(
     (response) => response.json()
@@ -151,9 +151,24 @@ function sumbitListener(adoptModal) {
       'input[name="otherPets"]:checked'
     ).value;
     const homeType = document.getElementById("homeType").value;
-    const dogImage = document.getElementById("sub").getAttribute("data-dog-img");
+    const dogImage = document
+      .getElementById("sub")
+      .getAttribute("data-dog-img");
 
-    //creating an adoption object
+    // Select all checked checkboxes with attribute type="checkbox" and those who are checked ( pseudo class )
+    const checkedCheckboxes = document.querySelectorAll('input[type="checkbox"]:checked');
+    // Convert the NodeList of checked checkboxes to an array and their values
+    let aspects = [];
+    for(let i=0; i<checkedCheckboxes.length; i++){
+        aspects.push(checkedCheckboxes[i].value);
+    }
+
+    // Remove the last element from the aspects list because it is value 'on'
+    if (aspects.length > 0) {
+      aspects.pop();
+    }
+
+    // Creating an adoption object
     const adoption = {
       adopterName,
       adopterEmail,
@@ -161,7 +176,8 @@ function sumbitListener(adoptModal) {
       adoptionReason,
       otherPets,
       homeType,
-      dogImage
+      dogImage,
+      aspects,
     };
 
     //retrieving the adoption list from localStorage
@@ -169,8 +185,7 @@ function sumbitListener(adoptModal) {
 
     //checking if such adoption already exists
     const existingAdoption = adoptions.find(
-      (adopt) =>
-        adopt.dogName === dogName && adopt.dogImage === dogImage
+      (adopt) => adopt.dogName === dogName && adopt.dogImage === dogImage
     );
 
     if (existingAdoption) {

@@ -112,8 +112,22 @@ function sumbitListener(adoptModal) {
     const dogImage = document
       .getElementById("sub")
       .getAttribute("data-dog-img");
+    // Select all checked checkboxes with type="checkbox"
+    const checkedCheckboxes = document.querySelectorAll(
+      'input[type="checkbox"]:checked'
+    );
+    // Convert the NodeList of checked checkboxes to an array and their values
+    let aspects = [];
+    for(let i=0; i<checkedCheckboxes.length; i++){
+        aspects.push(checkedCheckboxes[i].value);
+    }
 
-    //creating an adoption object
+    // Remove the last element from the aspects list because it is value 'on'
+    if (aspects.length > 0) {
+      aspects.pop();
+    }
+
+    // Creating an adoption object
     const adoption = {
       adopterName,
       adopterEmail,
@@ -122,6 +136,7 @@ function sumbitListener(adoptModal) {
       otherPets,
       homeType,
       dogImage,
+      aspects,
     };
 
     //retrieving the adoption list from localStorage
