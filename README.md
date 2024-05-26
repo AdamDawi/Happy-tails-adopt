@@ -6,7 +6,7 @@ Happy Tails Adopt is a web application that allows users to browse and adopt dog
 ### Main Page 
 - **Dog Cards:** Displays dogs available for adoption in cards with a picture and the dog's name.
   
-- **Adoption Option:** Clicking on "Adopt" opens a modal with form to fill out and submit to save it in local storage. ✨
+- **Adoption Option:** Clicking on "Adopt" opens a modal with form to fill out and submit to save it in local storage.
 
 - **Favorites:** Add dogs to your favorites list, saved in local storage.
 
@@ -48,7 +48,7 @@ git clone https://github.com/AdamDawi/Happy-tails-adopt
 ![1](https://github.com/AdamDawi/Happy-tails-adopt/assets/49430055/8cf09f02-29c9-40a3-8b44-490b4bb23000)
 ![2](https://github.com/AdamDawi/Happy-tails-adopt/assets/49430055/dc129e98-ef22-4225-ad69-713f8ce9abb9)
 ![3](https://github.com/AdamDawi/Happy-tails-adopt/assets/49430055/bf2c9f8f-c4be-4b44-9f4c-15cbcf10201b)
-![4](https://github.com/AdamDawi/Happy-tails-adopt/assets/49430055/71ab1e59-ca9b-4ee5-be46-4b6cc3e32249)
+![4](https://github.com/AdamDawi/Happy-tails-adopt/assets/49430055/0e62f279-e2a8-4caa-9344-2417f167b483)
 
 ## Author
 
