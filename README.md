@@ -33,8 +33,6 @@ Happy Tails Adopt is a web application that allows users to browse and adopt dog
 ### Storage:
 - **Local Storage:** Used to store favorite dogs and submitted adoption forms.
 
-### APIs:
-
 ## Installation
 
 1. Clone the repository:
